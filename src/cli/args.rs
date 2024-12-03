@@ -44,6 +44,10 @@ pub struct CliArgs {
     /// decompress or list with password
     #[arg(short = 'p', long = "password", global = true)]
     pub password: Option<OsString>,
+   
+    /// only extract files from the archive with this prefix
+    #[arg(short = 'x', long = "prefix", global = true)]
+    pub prefix: Option<OsString>,
 
     // Ouch and claps subcommands
     #[command(subcommand)]
@@ -138,6 +142,7 @@ mod tests {
             format: None,
             // This is usually replaced in assertion tests
             password: None,
+            prefix: None,
             cmd: Subcommand::Decompress {
                 // Put a crazy value here so no test can assert it unintentionally
                 files: vec!["\x00\x11\x22".into()],

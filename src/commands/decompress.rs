@@ -29,6 +29,8 @@ impl<T: Read + io::Seek> ReadSeek for T {}
 /// formats contains each format necessary for decompression, example: [Gz, Tar] (in decompression order)
 /// output_dir it's where the file will be decompressed to, this function assumes that the directory exists
 /// output_file_path is only used when extracting single file formats, not archive formats like .tar or .zip
+/// prefix is an optional parameter which can be passed, if passed, files must have this prefix to
+/// be extracted.
 pub fn decompress_file(
     input_file_path: &Path,
     formats: Vec<Extension>,
@@ -37,6 +39,7 @@ pub fn decompress_file(
     question_policy: QuestionPolicy,
     quiet: bool,
     password: Option<&[u8]>,
+    prefix: Option<&[u8]>,
 ) -> crate::Result<()> {
     assert!(output_dir.exists());
     let input_is_stdin = is_path_stdin(input_file_path);
